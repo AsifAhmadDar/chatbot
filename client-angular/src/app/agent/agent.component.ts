@@ -25,7 +25,14 @@ export class AgentComponent implements OnInit {
       "role": "agent",
       "status": true
     }
-    this.userService.create_user(user).subscribe();
+    if(!this.userService.user_value){
+      this.userService.create_user(user).subscribe((res:any)=>{
+        if(res.status ===200){
+          this.userService.set_logged_user(res.data)
+        }
+      });
+    }
+
   }
 
 }
