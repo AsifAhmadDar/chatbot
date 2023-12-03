@@ -7,10 +7,10 @@ import { IResponse } from '../shared/interfaces/iresponse';
 import { MessagingService } from '../shared/services/messaging.service';
 import { MessageItem } from '../agent/agent-chat/agent-chat.component';
 export interface IMessage {
-  room: string|undefined,
-  agent: string|undefined,
+  room?: string,
+  agent?: string,
   message: string,
-  sender: string|undefined,
+  sender?: string,
 }
 @Component({
   selector: 'app-chat-bot',
@@ -33,7 +33,7 @@ export class ChatBotComponent implements OnInit {
   inputControl = new FormControl(null, [Validators.required]);
   conversation: MessageItem[] = [];
   joined_agent: string = ""
-  message_obj!: IMessage;
+  message_obj = <IMessage>{};
   ngOnInit(): void {
     this.user = this.userService.user_value;
     if (this.user) {
@@ -53,6 +53,7 @@ export class ChatBotComponent implements OnInit {
       if (res.status === 200) {
         this.user = res.data;
         this.userService.set_logged_user(res.data);
+        this.message_obj = {room:this.user?._id,agent:"",message:"",sender:this.user?._id}
         this.messagingService.join_room(this.user)
         return
       }
@@ -89,11 +90,11 @@ export class ChatBotComponent implements OnInit {
   }
 
   get_joined_agent() {
-    this.messagingService.get_joined_agent().subscribe((data: any) => {
-      console.log(data);
+    this.messagingService.get_joined_agent().subscribe((data: User) => {
+      this.joined_agent = data?.name;
+      this.message_obj.agent = data._id;
+      console.log(this.message_obj);
       
-      this.joined_agent = data.name;
-      this.message_obj.agent = data._id
     })
   }
 }

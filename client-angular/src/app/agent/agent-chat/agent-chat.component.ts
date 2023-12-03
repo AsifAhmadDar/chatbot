@@ -33,10 +33,7 @@ export class AgentChatComponent implements OnInit, OnChanges {
       this.acceptUser()
     }
     this.watch_user_left();
-    this.messageService.recieveMessage().subscribe((data: any) => {
-      const messageItem: MessageItem = { class: "recieved", message: data };
-      this.conversation.push(messageItem);
-    })
+    this.getUserMessage();
   }
 
 

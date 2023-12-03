@@ -54,13 +54,17 @@ export class MessagingService {
   }
 
   get_joined_agent(){
-    return new Observable((observer) => {
-      this.socket.on('agent-joined', (data:any) => {
+    return new Observable<User>((observer) => {
+      this.socket.on('agent-joined', (data:User) => {
+        console.log(data);
+        
         observer.next(data);
       });
     });
   }
   sendMessage(message_obj:IMessage){
+    console.log(message_obj);
+    
     this.socket.emit('message',message_obj)
   }
   recieveMessage(){
