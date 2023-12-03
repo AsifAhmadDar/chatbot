@@ -21,7 +21,7 @@ export interface IMessage {
 })
 export class ChatBotComponent implements OnInit {
 
-  show_widget: boolean = true;
+  show_widget: boolean = false;
   userService = inject(UserService);
   messagingService = inject(MessagingService)
   userForm: FormGroup = new FormGroup({
