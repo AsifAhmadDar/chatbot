@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 16
+
+  pre_build:
+    commands:
+      - npm install
+      - npm run build
+
+  build:
+    commands:
+      - echo Build phase
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: dist/build
+  exclude: package.json

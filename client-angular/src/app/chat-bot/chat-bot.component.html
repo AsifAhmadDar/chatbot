@@ -1,0 +1,87 @@
+
+<div class="body d-flex align-items-center justify-content-center" style="min-height: 100dvh;">
+    <h2>Chatbot</h2>
+</div>
+
+<div class="widget-container d-flex justify-content-end align-items-end">
+
+    <ng-container *ngIf="show_widget">
+        <div class="card shadow-md w-100">
+
+            <ng-container *ngIf="!user;else userTemplate">
+                <div class="header p-3 bg-primary">
+                    <h6>Let's chat ? We're Online</h6>
+                    <small class="fs-small">Hi there, Please fill out the form to start conversion</small>
+                </div>
+                <div class="p-3 body d-flex align-items-center justify-content-center">
+                    <div class="card p-4">
+                            <ng-container *ngIf="!lastSession">
+                                <form [formGroup]="userForm" class="needs-validation">
+                                    <div class="form-group mb-3">
+                                        <input type="text" class="form-control" id="name-input" aria-describedby="name"
+                                            placeholder="*Name" formControlName="name" required>
+                                        <small class="error text-danger"
+                                            *ngIf="userForm.get('name')?.touched && userForm.get('name')?.invalid">
+                                            name is required
+                                        </small>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="email" class="form-control" formControlName="email" id="email-input"
+                                            aria-describedby="email" placeholder="*Email" required>
+                                        <small class="error text-danger"
+                                            *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid">
+                                            email is required
+                                        </small>
+                                    </div>
+                                </form>
+                            </ng-container>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary w-100" (click)="create_user()">
+                            Start Chat
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-template #userTemplate>
+                <div class="header p-3 bg-primary d-flex align-items-center justify-content-between">
+                    <h6>Hi {{user?.name}}</h6>
+                    <button class="btn btn-warning end-session" (click)="end_session()">End</button>
+                </div>
+                <div class="body px-3">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul>
+                                <li class="agent-status" *ngIf="joined_agent">{{joined_agent}} joined</li>
+                                <li [class]="message.class=='sent'?'bg-primary':'bg-secondary'"
+                                    *ngFor="let message of conversation">
+                                    {{message.message}}
+                                </li>
+                            </ul>
+                        </div>
+    
+                        <div class="col-lg-12 d-flex align-items-end justify-content sticky-bottom">
+                            <div class="input-group mb-3 w-100">
+                                <input type="text" class="form-control" placeholder="Write Message"
+                                    aria-label="Write Message" aria-describedby="basic-addon2" [formControl]="inputControl">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" (click)="conversation.length? sendMessage():start_session()" [disabled]="inputControl.invalid">
+                                        <i class="fa fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+
+        </div>
+    </ng-container>
+
+
+    <div class="widget-button shaow-md mt-2 d-flex justify-content-end">
+        <button class="btn btn-primary rounded-circle" (click)="show_widget = !show_widget;userForm.reset()">
+            <i class="fa fs-5 {{show_widget?'fa-times':'fa-envelope'}}"></i>
+        </button>
+    </div>
+</div>

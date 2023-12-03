@@ -1,0 +1,11 @@
+<div class="list bg-primary">
+    <ul class="user-list">
+        <li class="top fs-4 ml-0 text-white text-center fw-bold">Users</li>
+        <li class="user" *ngFor="let user of live_users" (click)="navigate_to_chat(user._id)">
+            {{user.name}}
+            <small *ngIf="user.new" class="text-danger">
+                New
+            </small>
+        </li>
+    </ul>
+</div>

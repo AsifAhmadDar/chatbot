@@ -1,0 +1,9 @@
+.inner-section{
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left:  22%;
+    min-height: 100dvh;
+    width: calc(100% - 22%);
+    overflow-y: hidden;
+}
