@@ -2,6 +2,8 @@ export interface User {
     _id?:string
     name:string;
     email:string;
+    role?:string;
+    status?:boolean
 }
 
 export const default_user = {

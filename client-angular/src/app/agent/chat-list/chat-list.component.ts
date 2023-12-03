@@ -17,10 +17,13 @@ export class ChatListComponent implements OnInit {
   ngOnInit(): void {
     this.getActiveUsers()
     this.messageService.watch_user_joined().subscribe((data: any) => {
-      console.log(data);
-      const { user } = data;
-      user.new = true;
-      this.live_users.push(data.user);
+      let exists = this.live_users.find((u) => u._id === data._id);
+      if (exists) {
+        exists.new = true;
+        return
+      }
+      const user = { ...data, new: true }
+      this.live_users.push(user);
     })
   }
 
@@ -30,13 +33,11 @@ export class ChatListComponent implements OnInit {
     this.router.navigate([`/agent/chat/${id}`]);
   }
 
-  getActiveUsers(){
-    this.agentService.geActiveUsers().subscribe((res:any)=>{
-      console.log(res);
-      
-     if(res.status ===200){
-      this.live_users = [...this.live_users,...res.data]
-     }
+  getActiveUsers() {
+    this.agentService.geActiveUsers().subscribe((res: any) => {
+      if (res.status === 200) {
+        this.live_users = [...this.live_users, ...res.data]
+      }
     })
   }
 

@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { User } from '../interfaces/user';
 import { Observable, Subject } from 'rxjs';
+import { IMessage } from 'src/app/chat-bot/chat-bot.component';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +19,9 @@ export class MessagingService {
     this.socket.connect();
   }
 
-  join_room(user: User|null,message:string) {
+  join_room(user: User|null) {
     if(!user) return;
-    this.socket.emit('join-room', {user,message});
+    this.socket.emit('join-room', user);
   }
   leave_room(user: User|null) {
     if(!user) return;
@@ -59,8 +60,8 @@ export class MessagingService {
       });
     });
   }
-  sendMessage(room:string,message:string){
-    this.socket.emit('message',{room,message})
+  sendMessage(message_obj:IMessage){
+    this.socket.emit('message',message_obj)
   }
   recieveMessage(){
     return new Observable((observer) => {

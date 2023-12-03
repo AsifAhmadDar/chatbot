@@ -52,20 +52,23 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <ul>
-                                <li class="agent-status" *ngIf="joined_agent">{{joined_agent}} joined</li>
+                                <li class="agent-status">     
+                                    {{(!joined_agent)? 'wait for agent to join' : joined_agent +' joined'}}
+                                </li>
                                 <li [class]="message.class=='sent'?'bg-primary':'bg-secondary'"
                                     *ngFor="let message of conversation">
                                     {{message.message}}
                                 </li>
                             </ul>
                         </div>
-    
                         <div class="col-lg-12 d-flex align-items-end justify-content sticky-bottom">
+
                             <div class="input-group mb-3 w-100">
+                             
                                 <input type="text" class="form-control" placeholder="Write Message"
                                     aria-label="Write Message" aria-describedby="basic-addon2" [formControl]="inputControl">
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" (click)="conversation.length? sendMessage():start_session()" [disabled]="inputControl.invalid">
+                                    <button class="btn btn-primary" (click)="sendMessage()" [disabled]="inputControl.invalid || !joined_agent">
                                         <i class="fa fa-paper-plane"></i>
                                     </button>
                                 </div>

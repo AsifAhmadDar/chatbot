@@ -15,7 +15,7 @@ function socket_init(server: any) {
       socket.join(config.agents_room);
     })
     socket.on('join-room', (data) => {
-      socket.join(data.user._id)
+      socket.join(data._id)
       join_room(data,socket)
     })
     socket.on('leave-room', (data)=>{

@@ -2,12 +2,12 @@ import { Schema } from "mongoose";
 import { database } from "../data";
 
 const messageSchema = new Schema({
-    sender: { type: Schema.Types.ObjectId, ref: 'user', required: true ,index:true},
+    sender: { type: Schema.Types.ObjectId, ref: 'user', required: true, index: true },
     message: { type: String }
-}, { timestamps: true })
+}, { timestamps: true, _id: false })
 
 const conversationSchema = new Schema({
-    members:[{ type: Schema.Types.ObjectId, ref: 'user', required: true ,index:true}],
+    members: [{ type: Schema.Types.ObjectId, ref: 'user', required: true, index: true }],
     messages: [{ type: messageSchema }]
 }, { timestamps: true })
 
