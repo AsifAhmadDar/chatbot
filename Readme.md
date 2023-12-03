@@ -12,8 +12,7 @@ conversations with users.
 
 **Prerequisites**
 
-Ensure the following software is installed before setting up the Chat
-Widget:
+Ensure the following software is installed before running up the Chatbot:
 
 -   [Node.js](https://nodejs.org/)
 
